@@ -1,4 +1,5 @@
 using Amazon.CDK;
+using Amazon.CDK.AWS.Lambda;
 
 namespace LambdaCdkCsharp
 {
@@ -6,7 +7,12 @@ namespace LambdaCdkCsharp
     {
         internal LambdaCdkCsharpStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
         {
-            // The code that defines your stack goes here
+            Function fn = new Function(this, "myfunction", new FunctionProps
+            {
+                Runtime = Runtime.DOTNET_CORE_2_1,
+                Code = Code.FromAsset("./HelloFunction/src/HelloFunction/bin/Release/netcoreapp2.1/publish"),
+                Handler = "HelloFunction::HelloFunction.Function::FunctionHandler"
+            });
         }
     }
 }
