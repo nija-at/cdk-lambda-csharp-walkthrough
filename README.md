@@ -1,22 +1,41 @@
 This package is an example on how to use AWS CDK to deploy a Lambda function handler.
 Both the CDK app and the Lambda handler are written in C# and built using the `dotnet` CLI.
 
-# Structure of this project
+# This project
+
+## Structure
 
 In this project, `Program.cs` is the main entry point of the CDK app and the CDK construct
 for the lambda function is configured in `LambdaCdkCsharp.cs`.
 
 The lambda function is a another csharp project residing within the `HelloFunction` folder.
 
-# How to do it yourself?
+## Build & Deploy
+
+Build -
+
+```shell
+cd HelloFunction/src/HelloFunction
+dotnet build
+dotnet tool install -g Amazon.Lambda.Tools # if not already
+dotnet lambda package
+cd ../../../
+dotnet build src
+```
+
+Deploy & Test -
+
+```shell
+cdk deploy
+dotnet lambda invoke-function <function-name> --payload "hello world"
+```
+
+# How to do this yourself?
 
 ## Pre-requisites
 
-1. I use vscode to author and manage this project. The steps here reflect the same.
-   While most of these steps should remain the same for any other IDE, your mileage may vary.
-
-2. If you're unfamiliar with AWS Lambda functions in C#, read this first -
-   https://docs.aws.amazon.com/lambda/latest/dg/dotnet-programming-model.html
+If you're unfamiliar with AWS Lambda functions in C#, read this first -
+https://docs.aws.amazon.com/lambda/latest/dg/dotnet-programming-model.html
 
 ## Steps
 
@@ -53,7 +72,7 @@ The lambda function is a another csharp project residing within the `HelloFuncti
     ```shell
     cd <handler-project-name>/src/<handler-project-name>
     dotnet build
-    dotnet tool install -g Amazon.Lambda.Tools
+    dotnet tool install -g Amazon.Lambda.Tools # if not already
     dotnet lambda package
     ```
 
@@ -85,5 +104,5 @@ The lambda function is a another csharp project residing within the `HelloFuncti
    Lambda function configured in this project. Modify it per your lambda function.
 
     ```shell
-    dotnet lambda invoke-function <function-name> --payload "hello world"    
+    dotnet lambda invoke-function <function-name> --payload "hello world"
     ```
